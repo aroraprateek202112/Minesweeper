@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Minesweeper</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="timer">Timer</string>
+    <string name="smiley">Smiley</string>
+
+    
+    <array name="difficulty">
+        <item>Easy</item>
+        <item>Medium</item>
+        <item>Hard</item>
+    </array>
+</resources>
