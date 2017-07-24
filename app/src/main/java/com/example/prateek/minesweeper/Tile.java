@@ -3,7 +3,6 @@ package com.example.prateek.minesweeper;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.widget.Button;
 
 /**
  * Created by prateek02.arora on 02-12-2015.
@@ -15,7 +14,7 @@ import android.widget.Button;
 // isCovered-is the tile covered(covered)
 // noSurroundingMines-the number of surrounding mines
 
-public class Tile extends Button {
+public class Tile extends android.support.v7.widget.AppCompatButton {
 
     private static final String LOG_TAG = Tile.class.getSimpleName();
     private boolean isMine;
