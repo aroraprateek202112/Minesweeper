@@ -41,7 +41,7 @@ public class Game extends Activity {
 
   private Handler timer;
   private int secondPassed = 0;
-  private int tileWH = 20;
+  private int tileWH = 40;
   private int tilePadding = 3;
 
   @Override
@@ -112,7 +112,7 @@ public class Game extends Activity {
               } else if (wonGame()) {
                 winGame();
               } else {
-                //uncoverTiles(curRow, curCol);
+                uncoverTiles(curRow, curCol);
               }
             }
           }
@@ -139,14 +139,16 @@ public class Game extends Activity {
 
       //set the height and width of the row
       tableRow.setLayoutParams(
-          new TableRow.LayoutParams((tileWH * tilePadding) * totalCols, tileWH * tilePadding));
+          new TableRow.LayoutParams((tileWH +2 * tilePadding) * totalCols, tileWH + 2 * tilePadding));
+      Log.d(LOG_TAG, "showGameBoard TableRow width ["+((tileWH +2 * tilePadding) * totalCols)+"] height ["+ (tileWH + 2 * tilePadding)+"]");
 
       //for every column
       for (int col = 0; col < totalCols; col++) {
 
         //set the width and height of the tile
         mTitles[row][col].setLayoutParams(
-            new TableRow.LayoutParams(tileWH * tilePadding, tileWH * tilePadding));
+            new TableRow.LayoutParams(tileWH, tileWH));
+        Log.d(LOG_TAG, "showGameBoard Tile width ["+tileWH+"] height ["+ tileWH+"]");
 
         //add some padding to the tile
         mTitles[row][col].setPadding(tilePadding, tilePadding, tilePadding, tilePadding);
@@ -155,13 +157,14 @@ public class Game extends Activity {
         tableRow.addView(mTitles[row][col]);
       }
       mMineField.addView(tableRow,
-          new TableLayout.LayoutParams((tileWH * tilePadding) * totalCols, tileWH * tilePadding));
+          new TableLayout.LayoutParams((tileWH +2 * tilePadding) * totalCols, tileWH + 2 * tilePadding));
+      Log.d(LOG_TAG, "showGameBoard addView TableRow width ["+((tileWH +2 * tilePadding) * totalCols)+"] height ["+ (tileWH + 2 * tilePadding)+"]");
     }
   }
 
   private void setUpMineField(int row, int col) {
 
-    Log.d(LOG_TAG, "setUpMineField");
+    //Log.d(LOG_TAG, "setUpMineField");
 
     Random random = new Random();
     int mineRow, mineCol;
@@ -170,29 +173,19 @@ public class Game extends Activity {
       mineRow = random.nextInt(totalRows);//+1;
       mineCol = random.nextInt(totalCols);//+1;
 
-      Log.d(LOG_TAG, "setUpMineField [" + i + "] mineRow [" + mineRow + "]");
-      Log.d(LOG_TAG, "setUpMineField [" + i + "] mineCol [" + mineCol + "]");
 
       if (mineRow == row + 1 && mineCol == col + 1) {
-        Log.d(LOG_TAG, "setUpMineField if block");
         i--;
       } else if (mTitles[mineRow][mineCol].isMine()) {
-        Log.d(LOG_TAG, "setUpMineField else if block");
         i--;
       } else {
         //plant a new mine
         mTitles[mineRow][mineCol].plantMine();
 
-        Log.d(LOG_TAG, "setUpMineField else block plant mine");
+      Log.d(LOG_TAG, "setUpMineField [" + i + "] at mineRow [" + mineRow + "] mineCol [" + mineCol + "]");
         //go one row and col back
         int startRow = mineRow - 1;
         int startCol = mineCol - 1;
-
-        Log.d(LOG_TAG, "setUpMineField else block plant mine startRow ["
-            + startRow
-            + "] startCol ["
-            + startCol
-            + "]");
 
         //check 3 rows across and 3 down
         int checkRows = 3;
@@ -215,14 +208,9 @@ public class Game extends Activity {
 
         for (int j = startRow; j < startRow + checkRows; j++) {
           for (int k = startCol; k < startCol + checkCols; k++) {
-            Log.d(LOG_TAG, "setUpMineField else block plant mine j [" + j + "] k [" + k + "]");
             if (!mTitles[j][k].isMine()) {
               mTitles[j][k].updateSurroundingMineCount();
-              Log.d(LOG_TAG, "setUpMineField else block plant mine j ["
-                  + j
-                  + "] k ["
-                  + k
-                  + "] updateSurroundingMineCount");
+              Log.d(LOG_TAG, "setUpMineField [" + i + "] mine count at j [" + j + "] k [" + k + "]");
             }
           }
         }

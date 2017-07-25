@@ -126,11 +126,11 @@ public class Tile extends android.support.v7.widget.AppCompatButton {
 
     public void updateSurroundingMineCount() {
         noSurroundingMines++;
-        Log.d(LOG_TAG, "updateSurroundingMineCount noSurroundingMines [" + noSurroundingMines + "]");
-        String img = "mines"+noSurroundingMines;
-        Log.d(LOG_TAG, "updateSurroundingMineCount img [" + img + "]");
-        int drawableId = getResources().getIdentifier(img, "drawable", "com.example.prateek.minesweeper");
-        Log.d(LOG_TAG, "updateSurroundingMineCount drawableId [" + drawableId + "]");
-        this.setBackgroundResource(drawableId);
+        //Log.d(LOG_TAG, "updateSurroundingMineCount noSurroundingMines [" + noSurroundingMines + "]");
+        //String img = "mines"+noSurroundingMines;
+        //Log.d(LOG_TAG, "updateSurroundingMineCount img [" + img + "]");
+        //int drawableId = getResources().getIdentifier(img, "drawable", "com.example.prateek.minesweeper");
+        //Log.d(LOG_TAG, "updateSurroundingMineCount drawableId [" + drawableId + "]");
+        //this.setBackgroundResource(drawableId);
     }
 }
