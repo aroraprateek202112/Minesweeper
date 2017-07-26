@@ -5,49 +5,62 @@
     android:background="@color/background"
     android:stretchColumns="0,2">
 
-    <TableRow>
-        <TextView
-            android:id="@+id/Timer"
-            android:layout_column="0"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:gravity="center"
-            android:textColor="#FFFFFF"
-            android:textSize="35sp"
-            android:text="@string/timer" />
+  <TableRow>
+    <TextView
+        android:id="@+id/Timer"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_column="0"
+        android:gravity="center"
+        android:text="@string/timer"
+        android:textColor="#FFFFFF"
+        android:textSize="35sp"/>
 
-        <ImageView
-            android:id="@+id/Smiley"
-            android:contentDescription="@string/smiley"
-            android:layout_column="1"
-            android:scaleType="center"
-            android:padding="5dip"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:gravity="center"/>
+    <ImageView
+        android:id="@+id/Smiley"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_column="1"
+        android:contentDescription="@string/smiley"
+        android:gravity="center"
+        android:padding="5dip"
+        android:scaleType="center"/>
 
-        <TextView
-            android:id="@+id/MineCount"
-            android:layout_column="2"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:gravity="center"
-            android:textColor="#FFFFFF"
-            android:textSize="35sp"
-            android:text="@string/timer" />
-    </TableRow>
+    <TextView
+        android:id="@+id/MineCount"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_column="2"
+        android:gravity="center"
+        android:text="@string/timer"
+        android:textColor="#FFFFFF"
+        android:textSize="35sp"/>
+  </TableRow>
 
-    <TableRow>
-        <TableLayout
-            android:id="@+id/MineField"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_span="3"
-            android:stretchColumns="*"
-            android:gravity="bottom"
-            android:background="@color/game_board"
-            android:padding="5dip">
-        </TableLayout>
-    </TableRow>
+  <TableRow>
+    <ScrollView android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_span="3">
+      <TableLayout
+          android:id="@+id/MineField"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:stretchColumns="*"
+          android:background="@color/game_board"
+          android:gravity="bottom"
+          android:padding="5dip">
+      </TableLayout>
+    </ScrollView>
+    <!--<TableLayout-->
+    <!--android:id="@+id/MineField"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_span="3"-->
+    <!--android:stretchColumns="*"-->
+    <!--android:gravity="bottom"-->
+    <!--android:background="@color/game_board"-->
+    <!--android:padding="5dip">-->
+    <!--</TableLayout>-->
+  </TableRow>
 
 </TableLayout>
