@@ -1,6 +1,7 @@
 package com.example.prateek.minesweeper;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
 
@@ -84,6 +85,7 @@ public class Tile extends android.support.v7.widget.AppCompatButton {
         isCovered = true;
         noSurroundingMines = 0;
 
+        this.setBackgroundColor(Color.parseColor("#7D7B7B"));
 //        this.setBackgroundResource(R.drawable.tile);
     }
 
@@ -105,7 +107,9 @@ public class Tile extends android.support.v7.widget.AppCompatButton {
     // Shows number icon
     public void showNumbers() {
         String img = "mines"+noSurroundingMines;
+        //Log.d(LOG_TAG, "showNumbers img :"+img);
         int drawableId = getResources().getIdentifier(img, "drawable", "com.example.prateek.minesweeper");
+        //Log.d(LOG_TAG, "showNumbers drawableId :"+drawableId);
         this.setBackgroundResource(drawableId);
     }
 

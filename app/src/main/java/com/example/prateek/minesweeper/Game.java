@@ -148,11 +148,13 @@ public class Game extends Activity {
 
       //for every column
       int tileWidth = (getResources().getDisplayMetrics().widthPixels / totalCols) - (2 * Util.dpToPixels(getResources().getDisplayMetrics(), 5));
+      TableRow.LayoutParams params = null;
       for (int col = 0; col < totalCols; col++) {
 
+        params = new TableRow.LayoutParams(tileWidth, tileWH);
+        params.setMargins(tilePadding, tilePadding, tilePadding, tilePadding);
         //set the width and height of the tile
-        mTitles[row][col].setLayoutParams(
-            new TableRow.LayoutParams(tileWidth, tileWH));
+        mTitles[row][col].setLayoutParams(params);
         Log.d(LOG_TAG, "showGameBoard Tile width ["+tileWidth+"] height ["+ tileWH+"]");
 
         //add some padding to the tile
