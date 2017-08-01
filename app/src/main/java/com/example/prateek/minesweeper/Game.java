@@ -131,32 +131,42 @@ public class Game extends Activity {
   }
 
   private void showGameBoard() {
+    if (totalRows <= 0) {
+      return;
+    }
 
+    int tileWidth = (getResources().getDisplayMetrics().widthPixels / totalCols) - (2
+        * getResources().getDimensionPixelSize(R.dimen.margin_5_dp));
+    int tileHeight =
+        getResources().getDimensionPixelSize(R.dimen.minimum_tile_height) < tileWidth ? tileWidth
+            : getResources().getDimensionPixelSize(R.dimen.minimum_tile_height);
+
+    TableRow.LayoutParams tableRowParams = new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, tileHeight + 2 * tilePadding);
     // for every row
     for (int row = 0; row < totalRows; row++) {
 
-      int tileWidth = (getResources().getDisplayMetrics().widthPixels / totalCols) - (2 * getResources().getDimensionPixelSize(R.dimen.margin_5_dp));
-      int tileHeight = getResources().getDimensionPixelSize(R.dimen.minimum_tile_height) < tileWidth ? tileWidth : getResources().getDimensionPixelSize(R.dimen.minimum_tile_height);
       //create a new table row
       TableRow tableRow = new TableRow(this);
 
       //set the height and width of the row
-      tableRow.setLayoutParams(
-          new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, tileHeight + 2 * tilePadding));
-      mMineField.addView(tableRow,
-          new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, tileHeight + 2 * tilePadding));
+      tableRow.setLayoutParams(tableRowParams);
+      mMineField.addView(tableRow, tableRowParams);
       //Log.d(LOG_TAG, "showGameBoard TableRow width ["+mMineField.getLayoutParams().width+"] height ["+ mMineField.getLayoutParams().height+"]");
-      Log.d(LOG_TAG, "showGameBoard TableRow width ["+getResources().getDisplayMetrics().widthPixels+"] height ["+ mMineField.getLayoutParams().height+"]");
+      Log.d(LOG_TAG, "showGameBoard TableRow width ["
+          + getResources().getDisplayMetrics().widthPixels
+          + "] height ["
+          + mMineField.getLayoutParams().height
+          + "]");
 
       //for every column
-      TableRow.LayoutParams params = null;
+      TableRow.LayoutParams tileParams = null;
       for (int col = 0; col < totalCols; col++) {
 
-        params = new TableRow.LayoutParams(tileWidth, tileHeight);
-        params.setMargins(tilePadding, tilePadding, tilePadding, tilePadding);
+        tileParams = new TableRow.LayoutParams(tileWidth, tileHeight);
+        tileParams.setMargins(tilePadding, tilePadding, tilePadding, tilePadding);
         //set the width and height of the tile
-        mTitles[row][col].setLayoutParams(params);
-        Log.d(LOG_TAG, "showGameBoard Tile width ["+tileWidth+"] height ["+ tileHeight+"]");
+        mTitles[row][col].setLayoutParams(tileParams);
+        Log.d(LOG_TAG, "showGameBoard Tile width [" + tileWidth + "] height [" + tileHeight + "]");
 
         //add some padding to the tile
         //mTitles[row][col].setPadding(tilePadding, tilePadding, tilePadding, tilePadding);
@@ -216,7 +226,6 @@ public class Game extends Activity {
       mineRow = random.nextInt(totalRows);//+1;
       mineCol = random.nextInt(totalCols);//+1;
 
-
       if (mineRow == row + 1 && mineCol == col + 1) {
         i--;
       } else if (mTitles[mineRow][mineCol].isMine()) {
@@ -225,7 +234,8 @@ public class Game extends Activity {
         //plant a new mine
         mTitles[mineRow][mineCol].plantMine();
 
-      Log.d(LOG_TAG, "setUpMineField [" + i + "] at mineRow [" + mineRow + "] mineCol [" + mineCol + "]");
+        Log.d(LOG_TAG,
+            "setUpMineField [" + i + "] at mineRow [" + mineRow + "] mineCol [" + mineCol + "]");
         //go one row and col back
         int startRow = mineRow - 1;
         int startCol = mineCol - 1;
@@ -253,7 +263,8 @@ public class Game extends Activity {
           for (int k = startCol; k < startCol + checkCols; k++) {
             if (!mTitles[j][k].isMine()) {
               mTitles[j][k].updateSurroundingMineCount();
-              Log.d(LOG_TAG, "setUpMineField [" + i + "] mine count at j [" + j + "] k [" + k + "]");
+              Log.d(LOG_TAG,
+                  "setUpMineField [" + i + "] mine count at j [" + j + "] k [" + k + "]");
             }
           }
         }
