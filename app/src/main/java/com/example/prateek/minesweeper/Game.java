@@ -24,19 +24,16 @@ public class Game extends Activity {
 
   private static final String LOG_TAG = Game.class.getSimpleName();
 
-  public static final String KEY_DIFFICULTY = "difficulty";
-  public static final int DIFFICULTY_EASY = 0;
-  public static final int DIFFICULTY_Medium = 1;
-  public static final int DIFFICULTY_HARD = 2;
   private Tile[][] mTitles;
   private TableLayout mMineField;
 
   private boolean timerStarted;
   private boolean minesSet;
 
-  int totalRows = 9;
-  int totalCols = 9;
-  int totalMines = 10;
+  int totalRows = IConstants.NO_OF_ROWS_FOR_DIFFICULTY_EASY;
+  int totalCols = IConstants.NO_OF_COLOUMNS_FOR_DIFFICULTY_EASY;
+  int totalMines = IConstants.NO_OF_MINES_FOR_DIFFICULTY_EASY;
+
   private ImageView mImageButton;
   private TextView mTimerText;
 
@@ -54,7 +51,7 @@ public class Game extends Activity {
     mImageButton = (ImageView) findViewById(R.id.Smiley);
     mTimerText = (TextView) findViewById(R.id.Timer);
 
-    int difficulty = getIntent().getIntExtra(KEY_DIFFICULTY, DIFFICULTY_EASY);
+    int difficulty = getIntent().getIntExtra(IConstants.KEY_DIFFICULTY, IConstants.DIFFICULTY_EASY);
     createGameBoard(difficulty);
     showGameBoard();
   }
@@ -64,17 +61,17 @@ public class Game extends Activity {
     //set total rows and columns based on the difficulty
 
     switch (difficulty) {
-      case DIFFICULTY_EASY:
+      case IConstants.DIFFICULTY_EASY:
         break;
-      case DIFFICULTY_Medium:
-        totalRows = 16;
-        totalCols = 16;
-        totalMines = 40;
+      case IConstants.DIFFICULTY_Medium:
+        totalRows = IConstants.NO_OF_ROWS_FOR_DIFFICULTY_MEDIUM;
+        totalCols = IConstants.NO_OF_COLOUMNS_FOR_DIFFICULTY_MEDIUM;
+        totalMines = IConstants.NO_OF_MINES_FOR_DIFFICULTY_MEDIUM;
         break;
-      case DIFFICULTY_HARD:
-        totalRows = 30;
-        totalCols = 16;
-        totalMines = 99;
+      case IConstants.DIFFICULTY_HARD:
+        totalRows = IConstants.NO_OF_ROWS_FOR_DIFFICULTY_HARD;
+        totalCols = IConstants.NO_OF_COLOUMNS_FOR_DIFFICULTY_HARD;
+        totalMines = IConstants.NO_OF_MINES_FOR_DIFFICULTY_HARD;
         break;
     }
 
@@ -141,17 +138,22 @@ public class Game extends Activity {
         getResources().getDimensionPixelSize(R.dimen.minimum_tile_height) < tileWidth ? tileWidth
             : getResources().getDimensionPixelSize(R.dimen.minimum_tile_height);
 
-    TableRow.LayoutParams tableRowParams = new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, tileHeight + 2 * tilePadding);
+    TableRow.LayoutParams tableRowParams =
+        new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+            tileHeight + 2 * tilePadding);
+    TableRow tableRow = null;
+
+    TableRow.LayoutParams tileParams = new TableRow.LayoutParams(tileWidth, tileHeight);
+    tileParams.setMargins(tilePadding, tilePadding, tilePadding, tilePadding);
     // for every row
     for (int row = 0; row < totalRows; row++) {
 
       //create a new table row
-      TableRow tableRow = new TableRow(this);
+      tableRow = new TableRow(this);
 
       //set the height and width of the row
       tableRow.setLayoutParams(tableRowParams);
       mMineField.addView(tableRow, tableRowParams);
-      //Log.d(LOG_TAG, "showGameBoard TableRow width ["+mMineField.getLayoutParams().width+"] height ["+ mMineField.getLayoutParams().height+"]");
       Log.d(LOG_TAG, "showGameBoard TableRow width ["
           + getResources().getDisplayMetrics().widthPixels
           + "] height ["
@@ -159,17 +161,11 @@ public class Game extends Activity {
           + "]");
 
       //for every column
-      TableRow.LayoutParams tileParams = null;
       for (int col = 0; col < totalCols; col++) {
 
-        tileParams = new TableRow.LayoutParams(tileWidth, tileHeight);
-        tileParams.setMargins(tilePadding, tilePadding, tilePadding, tilePadding);
         //set the width and height of the tile
         mTitles[row][col].setLayoutParams(tileParams);
         Log.d(LOG_TAG, "showGameBoard Tile width [" + tileWidth + "] height [" + tileHeight + "]");
-
-        //add some padding to the tile
-        //mTitles[row][col].setPadding(tilePadding, tilePadding, tilePadding, tilePadding);
 
         //add the tile to the table row
         tableRow.addView(mTitles[row][col]);
@@ -226,7 +222,7 @@ public class Game extends Activity {
       mineRow = random.nextInt(totalRows);//+1;
       mineCol = random.nextInt(totalCols);//+1;
 
-      if (mineRow == row + 1 && mineCol == col + 1) {
+      if (mineRow == row && mineCol == col) {
         i--;
       } else if (mTitles[mineRow][mineCol].isMine()) {
         i--;

@@ -85,7 +85,7 @@ public class Minesweeper extends AppCompatActivity implements View.OnClickListen
 
     private void startNewGame(int i) {
         Intent intent = new Intent(this, Game.class);
-        intent.putExtra(Game.KEY_DIFFICULTY, i);
+        intent.putExtra(IConstants.KEY_DIFFICULTY, i);
         startActivity(intent);
 
     }

@@ -1,0 +1,31 @@
+package com.example.prateek.minesweeper;
+
+/**
+ * Created on 2/8/17.
+ */
+
+public interface IConstants {
+
+  String KEY_DIFFICULTY = "difficulty";
+
+  // DIFFICULTY Level Constants
+  int DIFFICULTY_EASY = 0;
+  int DIFFICULTY_Medium = 1;
+  int DIFFICULTY_HARD = 2;
+
+  // DIFFICULTY EASY
+  int NO_OF_ROWS_FOR_DIFFICULTY_EASY = 9;
+  int NO_OF_COLOUMNS_FOR_DIFFICULTY_EASY = 9;
+  int NO_OF_MINES_FOR_DIFFICULTY_EASY = 10;
+
+  // DIFFICULTY MEDIUM
+  int NO_OF_ROWS_FOR_DIFFICULTY_MEDIUM = 16;
+  int NO_OF_COLOUMNS_FOR_DIFFICULTY_MEDIUM = 16;
+  int NO_OF_MINES_FOR_DIFFICULTY_MEDIUM = 40;
+
+  // DIFFICULTY HARD
+  int NO_OF_ROWS_FOR_DIFFICULTY_HARD = 30;
+  int NO_OF_COLOUMNS_FOR_DIFFICULTY_HARD = 16;
+  int NO_OF_MINES_FOR_DIFFICULTY_HARD = 99;
+
+}
