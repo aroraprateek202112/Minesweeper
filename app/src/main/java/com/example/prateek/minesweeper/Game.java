@@ -24,23 +24,26 @@ public class Game extends Activity {
 
   private static final String LOG_TAG = Game.class.getSimpleName();
 
+  // Views
   private Tile[][] mTitles;
   private TableLayout mMineField;
+  private ImageView mImageButton;
+  private TextView mTimerText;
 
   private boolean timerStarted;
   private boolean minesSet;
 
-  int totalRows = IConstants.NO_OF_ROWS_FOR_DIFFICULTY_EASY;
-  int totalCols = IConstants.NO_OF_COLOUMNS_FOR_DIFFICULTY_EASY;
-  int totalMines = IConstants.NO_OF_MINES_FOR_DIFFICULTY_EASY;
+  // No. of rows, coloumns and mines.
+  // This will vary based on difficulty level
+  int totalRows;
+  int totalCols;
+  int totalMines;
 
-  private ImageView mImageButton;
-  private TextView mTimerText;
+  // margin b/w tiles
+  private int tileMargin;// = 1;
 
   private Handler timer;
   private int secondPassed = 0;
-  private int tileWH = 40;
-  private int tilePadding = 1;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +55,18 @@ public class Game extends Activity {
     mTimerText = (TextView) findViewById(R.id.Timer);
 
     int difficulty = getIntent().getIntExtra(IConstants.KEY_DIFFICULTY, IConstants.DIFFICULTY_EASY);
+    initValues();
     createGameBoard(difficulty);
     showGameBoard();
+  }
+
+  private void initValues() {
+
+    totalRows = IConstants.NO_OF_ROWS_FOR_DIFFICULTY_EASY;
+    totalCols = IConstants.NO_OF_COLOUMNS_FOR_DIFFICULTY_EASY;
+    totalMines = IConstants.NO_OF_MINES_FOR_DIFFICULTY_EASY;
+
+    tileMargin = getResources().getDimensionPixelSize(R.dimen.margin_btw_tiles);
   }
 
   private void createGameBoard(int difficulty) {
@@ -132,45 +145,51 @@ public class Game extends Activity {
       return;
     }
 
-    int tileWidth = (getResources().getDisplayMetrics().widthPixels / totalCols) - (2
-        * getResources().getDimensionPixelSize(R.dimen.margin_5_dp));
+    Log.d(LOG_TAG, "showGameBoard TableRow width ["
+        + getResources().getDisplayMetrics().widthPixels
+        + "] height ["
+        + getResources().getDisplayMetrics().heightPixels
+        + "]");
+
+    // tileWidth
+    // = ((screen width - left and right padding) / no. of columns) - left and right margin b/w tile
+    int tileWidth = ((getResources().getDisplayMetrics().widthPixels - (2
+        * getResources().getDimensionPixelSize(R.dimen.margin_btw_tiles_and_border))) / totalCols)
+        - (2 * tileMargin);
     int tileHeight =
         getResources().getDimensionPixelSize(R.dimen.minimum_tile_height) < tileWidth ? tileWidth
             : getResources().getDimensionPixelSize(R.dimen.minimum_tile_height);
 
-    TableRow.LayoutParams tableRowParams =
-        new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-            tileHeight + 2 * tilePadding);
-    TableRow tableRow = null;
-
     TableRow.LayoutParams tileParams = new TableRow.LayoutParams(tileWidth, tileHeight);
-    tileParams.setMargins(tilePadding, tilePadding, tilePadding, tilePadding);
+    tileParams.setMargins(tileMargin, tileMargin, tileMargin, tileMargin);
+
+    Log.d(LOG_TAG, "showGameBoard Tile width [" + tileWidth + "] height [" + tileHeight + "]");
+    Log.d(LOG_TAG, "showGameBoard tileMargin in pixels [" + tileMargin + "]");
+
+    TableRow tileRow = null;
+
+    TableRow.LayoutParams tileRowParams =
+        new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, tileHeight + 2 * tileMargin);
+
     // for every row
     for (int row = 0; row < totalRows; row++) {
 
       //create a new table row
-      tableRow = new TableRow(this);
-
-      //set the height and width of the row
-      tableRow.setLayoutParams(tableRowParams);
-      mMineField.addView(tableRow, tableRowParams);
-      Log.d(LOG_TAG, "showGameBoard TableRow width ["
-          + getResources().getDisplayMetrics().widthPixels
-          + "] height ["
-          + mMineField.getLayoutParams().height
-          + "]");
+      tileRow = new TableRow(this);
 
       //for every column
       for (int col = 0; col < totalCols; col++) {
 
         //set the width and height of the tile
         mTitles[row][col].setLayoutParams(tileParams);
-        Log.d(LOG_TAG, "showGameBoard Tile width [" + tileWidth + "] height [" + tileHeight + "]");
 
         //add the tile to the table row
-        tableRow.addView(mTitles[row][col]);
+        tileRow.addView(mTitles[row][col]);
       }
-      //Log.d(LOG_TAG, "showGameBoard addView TableRow width ["+((tileWH +2 * tilePadding) * totalCols)+"] height ["+ (tileWH + 2 * tilePadding)+"]");
+      //set the height and width of the row
+      tileRow.setLayoutParams(tileRowParams);
+      mMineField.addView(tileRow, tileRowParams);
+      //Log.d(LOG_TAG, "showGameBoard addView TableRow width ["+((tileWH +2 * tileMargin) * totalCols)+"] height ["+ (tileWH + 2 * tileMargin)+"]");
     }
   }
 
@@ -184,9 +203,9 @@ public class Game extends Activity {
   //
   //    //set the height and width of the row
   //    tableRow.setLayoutParams(
-  //        new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, tileWH + 2 * tilePadding));
+  //        new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, tileWH + 2 * tileMargin));
   //    mMineField.addView(tableRow,
-  //        new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, tileWH + 2 * tilePadding));
+  //        new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, tileWH + 2 * tileMargin));
   //    //Log.d(LOG_TAG, "showGameBoard TableRow width ["+mMineField.getLayoutParams().width+"] height ["+ mMineField.getLayoutParams().height+"]");
   //    Log.d(LOG_TAG, "showGameBoard TableRow width ["+getResources().getDisplayMetrics().widthPixels+"] height ["+ mMineField.getLayoutParams().height+"]");
   //
@@ -196,18 +215,18 @@ public class Game extends Activity {
   //    for (int col = 0; col < totalCols; col++) {
   //
   //      params = new TableRow.LayoutParams(tileWidth, tileWH);
-  //      params.setMargins(tilePadding, tilePadding, tilePadding, tilePadding);
+  //      params.setMargins(tileMargin, tileMargin, tileMargin, tileMargin);
   //      //set the width and height of the tile
   //      mTitles[row][col].setLayoutParams(params);
   //      Log.d(LOG_TAG, "showGameBoard Tile width ["+tileWidth+"] height ["+ tileWH+"]");
   //
   //      //add some padding to the tile
-  //      //mTitles[row][col].setPadding(tilePadding, tilePadding, tilePadding, tilePadding);
+  //      //mTitles[row][col].setPadding(tileMargin, tileMargin, tileMargin, tileMargin);
   //
   //      //add the tile to the table row
   //      tableRow.addView(mTitles[row][col]);
   //    }
-  //    //Log.d(LOG_TAG, "showGameBoard addView TableRow width ["+((tileWH +2 * tilePadding) * totalCols)+"] height ["+ (tileWH + 2 * tilePadding)+"]");
+  //    //Log.d(LOG_TAG, "showGameBoard addView TableRow width ["+((tileWH +2 * tileMargin) * totalCols)+"] height ["+ (tileWH + 2 * tileMargin)+"]");
   //  }
   //}
 

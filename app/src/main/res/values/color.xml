@@ -2,4 +2,9 @@
 <resources>
     <color name="background">#000</color>
     <color name="game_board">#A0A0A0</color>
+    <color name="white_color">#FFFFFF</color>
+    <color name="red_color">#FF0000</color>
+
+    <color name="bg_solid_color_mine_count_tile">@color/white_color</color>
+    <color name="bg_stroke_color_mine_count_tile">@color/red_color</color>
 </resources>

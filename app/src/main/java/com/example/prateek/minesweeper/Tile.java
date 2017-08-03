@@ -125,7 +125,8 @@ public class Tile extends android.support.v7.widget.AppCompatButton {
     if (isMine) {
       triggerMine();
     } else {
-      showNumbers();
+      //showNumbers();
+      this.setBackgroundResource(R.drawable.circular_bg_drawable);
     }
   }
 

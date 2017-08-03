@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+  <solid android:color="@color/bg_solid_color_mine_count_tile"/>
+
+  <corners android:radius="@dimen/margin_3_dp"/>
+
+  <stroke
+      android:width="@dimen/bg_stroke_width_mine_count_tile"
+      android:color="@color/bg_stroke_color_mine_count_tile"/>
+
+</shape>

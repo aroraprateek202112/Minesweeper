@@ -3,7 +3,16 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <dimen name="margin_half_dp">0.5dp</dimen>
+    <dimen name="margin_1_dp">1dp</dimen>
+    <dimen name="margin_2_dp">2dp</dimen>
+    <dimen name="margin_3_dp">3dp</dimen>
     <dimen name="margin_5_dp">5dp</dimen>
+    <dimen name="margin_7_dp">7dp</dimen>
 
     <dimen name="minimum_tile_height">20dp</dimen>
+    <dimen name="margin_btw_tiles">@dimen/margin_half_dp</dimen>
+    <dimen name="margin_btw_tiles_and_border">@dimen/margin_5_dp</dimen>
+
+    <dimen name="bg_stroke_width_mine_count_tile">@dimen/margin_2_dp</dimen>
 </resources>
