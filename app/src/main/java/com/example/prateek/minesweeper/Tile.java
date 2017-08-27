@@ -2,6 +2,7 @@ package com.example.prateek.minesweeper;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 
 /**
@@ -16,127 +17,136 @@ import android.util.AttributeSet;
 
 public class Tile extends android.support.v7.widget.AppCompatButton {
 
-  private static final String LOG_TAG = Tile.class.getSimpleName();
-  private boolean isMine;
-  private boolean isFlag;
-  private boolean isQuestionMark;
-  private boolean isCovered;
-  private int noSurroundingMines;
+    private static final String LOG_TAG = Tile.class.getSimpleName();
+    private boolean isMine;
+    private boolean isFlag;
+    private boolean isQuestionMark;
+    private boolean isCovered;
+    private int noSurroundingMines;
 
-  public Tile(Context context) {
-    super(context);
-  }
-
-  public Tile(Context context, AttributeSet attrs) {
-    super(context, attrs);
-  }
-
-  public Tile(Context context, AttributeSet attrs, int defStyleAttr) {
-    super(context, attrs, defStyleAttr);
-  }
-
-  public boolean isMine() {
-    return isMine;
-  }
-
-  public void setMine(boolean mine) {
-    isMine = mine;
-  }
-
-  public boolean isFlag() {
-    return isFlag;
-  }
-
-  public void setFlag(boolean flag) {
-    isFlag = flag;
-  }
-
-  public boolean isQuestionMark() {
-    return isQuestionMark;
-  }
-
-  public void setQuestionMark(boolean questionMark) {
-    isQuestionMark = questionMark;
-  }
-
-  public boolean isCovered() {
-    return isCovered;
-  }
-
-  public void setCovered(boolean covered) {
-    isCovered = covered;
-  }
-
-  public int getNoSurroundingMines() {
-    return noSurroundingMines;
-  }
-
-  public void setNoSurroundingMines(int noSurroundingMines) {
-    this.noSurroundingMines = noSurroundingMines;
-  }
-
-  public void setDefaults() {
-    isMine = false;
-    isFlag = false;
-    isQuestionMark = false;
-    isCovered = true;
-    noSurroundingMines = 0;
-
-    this.setBackgroundColor(Color.parseColor("#7D7B7B"));
-    //        this.setBackgroundResource(R.drawable.tile);
-  }
-
-  public void setUncovered() {
-    isCovered = false;
-  }
-
-  public void plantMine() {
-    isMine = true;
-    //        this.setBackgroundResource(R.drawable.mine);
-  }
-
-  // Show the mineIcon
-  public void triggerMine() {
-    this.setBackgroundResource(R.drawable.mine);
-  }
-
-  // Shows number icon
-  public void showNumbers() {
-    String img = "mines" + noSurroundingMines;
-    //Log.d(LOG_TAG, "showNumbers img :"+img);
-    int drawableId =
-        getResources().getIdentifier(img, "drawable", "com.example.prateek.minesweeper");
-    //Log.d(LOG_TAG, "showNumbers drawableId :"+drawableId);
-    if (drawableId != 0) {
-      this.setBackgroundResource(drawableId);
-    } else {
-      this.setBackgroundColor(Color.parseColor("#DAD2D2"));
-    }
-  }
-
-  // Uncover the tile
-  public void openTile() {
-
-    if (!isCovered) {
-      return;
+    public Tile(Context context) {
+        super(context);
     }
 
-    setUncovered();
-    if (isMine) {
-      triggerMine();
-    } else {
-      //showNumbers();
-      this.setBackgroundResource(R.drawable.circular_bg_drawable);
+    public Tile(Context context, AttributeSet attrs) {
+        super(context, attrs);
     }
-  }
 
-  public void updateSurroundingMineCount() {
-    noSurroundingMines++;
-    //Log.d(LOG_TAG, "updateSurroundingMineCount noSurroundingMines [" + noSurroundingMines + "]");
-    //String img = "mines"+noSurroundingMines;
-    //Log.d(LOG_TAG, "updateSurroundingMineCount img [" + img + "]");
-    //int drawableId = getResources().getIdentifier(img, "drawable", "com.example.prateek.minesweeper");
-    //Log.d(LOG_TAG, "updateSurroundingMineCount drawableId [" + drawableId + "]");
-    //this.setBackgroundResource(drawableId);
-  }
+    public Tile(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
+
+    public boolean isMine() {
+        return isMine;
+    }
+
+    public void setMine(boolean mine) {
+        isMine = mine;
+    }
+
+    public boolean isFlag() {
+        return isFlag;
+    }
+
+    public void setFlag(boolean flag) {
+        isFlag = flag;
+    }
+
+    public boolean isQuestionMark() {
+        return isQuestionMark;
+    }
+
+    public void setQuestionMark(boolean questionMark) {
+        isQuestionMark = questionMark;
+    }
+
+    public boolean isCovered() {
+        return isCovered;
+    }
+
+    public void setCovered(boolean covered) {
+        isCovered = covered;
+    }
+
+    public int getNoSurroundingMines() {
+        return noSurroundingMines;
+    }
+
+    public void setNoSurroundingMines(int noSurroundingMines) {
+        this.noSurroundingMines = noSurroundingMines;
+    }
+
+    public void setDefaults() {
+        isMine = false;
+        isFlag = false;
+        isQuestionMark = false;
+        isCovered = true;
+        noSurroundingMines = 0;
+
+        this.setBackgroundColor(Color.parseColor("#7D7B7B"));
+        //        this.setBackgroundResource(R.drawable.tile);
+    }
+
+    public void setUncovered() {
+        isCovered = false;
+    }
+
+    public void plantMine() {
+        isMine = true;
+        //        this.setBackgroundResource(R.drawable.mine);
+    }
+
+    // Show the mineIcon
+    public void triggerMine() {
+        this.setBackgroundResource(R.drawable.mine);
+    }
+
+    // Shows number icon
+//  public void showNumbers() {
+//    String img = "mines" + noSurroundingMines;
+//    //Log.d(LOG_TAG, "showNumbers img :"+img);
+//    int drawableId =
+//        getResources().getIdentifier(img, "drawable", "com.example.prateek.minesweeper");
+//    //Log.d(LOG_TAG, "showNumbers drawableId :"+drawableId);
+//    if (drawableId != 0) {
+//      this.setBackgroundResource(drawableId);
+//    } else {
+//      this.setBackgroundColor(Color.parseColor("#DAD2D2"));
+//    }
+//  }
+    public void showNumbers() {
+        if (noSurroundingMines > 0) {
+            this.setBackgroundResource(R.drawable.circular_bg_drawable);
+            setTextColor(ContextCompat
+                    .getColor(getContext(), R.color.bg_stroke_color_mine_count_tile));
+            setText("" + noSurroundingMines);
+        } else {
+            this.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bg_color_opened_tile_open_tile));
+        }
+    }
+
+    // Uncover the tile
+    public void openTile() {
+
+        if (!isCovered) {
+            return;
+        }
+
+        setUncovered();
+        if (isMine) {
+            triggerMine();
+        } else {
+            showNumbers();
+        }
+    }
+
+    public void updateSurroundingMineCount() {
+        noSurroundingMines++;
+        //Log.d(LOG_TAG, "updateSurroundingMineCount noSurroundingMines [" + noSurroundingMines + "]");
+        //String img = "mines"+noSurroundingMines;
+        //Log.d(LOG_TAG, "updateSurroundingMineCount img [" + img + "]");
+        //int drawableId = getResources().getIdentifier(img, "drawable", "com.example.prateek.minesweeper");
+        //Log.d(LOG_TAG, "updateSurroundingMineCount drawableId [" + drawableId + "]");
+        //this.setBackgroundResource(drawableId);
+    }
 }

@@ -7,4 +7,6 @@
 
     <color name="bg_solid_color_mine_count_tile">@color/white_color</color>
     <color name="bg_stroke_color_mine_count_tile">@color/red_color</color>
+
+    <color name="bg_color_opened_tile_open_tile">#DAD2D2</color>
 </resources>
